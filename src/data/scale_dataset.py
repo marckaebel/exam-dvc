@@ -6,18 +6,19 @@ import logging
 from sklearn.preprocessing import StandardScaler
 
 
-@click.command()
-@click.argument('input_filepath', type=click.Path(exists=False), required=0)
-def main(input_filepath):
+# @click.command()
+# @click.argument('input_filepath', type=click.Path(exists=False), required=0)
+def main():
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in../preprocessed).
     """
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
-    input_filepath = click.prompt(
-        'Enter the file path for the extracted training data',
-        type=click.Path(exists=True))
+    # input_filepath = click.prompt(
+    #     'Enter the file path for the extracted training data',
+    #     type=click.Path(exists=True))
+    input_filepath = "data/processed"
     scale_data(input_filepath)
 
 
