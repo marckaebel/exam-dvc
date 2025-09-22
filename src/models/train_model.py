@@ -3,9 +3,8 @@ import pandas as pd
 import joblib
 import numpy as np
 import xgboost as xgb
-import os
-
-print(joblib.__version__)
+import dagshub
+import mlflow
 
 X_train = pd.read_csv('data/processed/X_train_scaled.csv')
 X_test = pd.read_csv('data/processed/X_test_scaled.csv')
@@ -19,9 +18,14 @@ best_params = joblib.load('./models/xgb_best_params.pkl')
 xgb_regressor = xgb.XGBRegressor(n_jobs=-1, **best_params)
 
 #--Train the model
-xgb_regressor.fit(X_train, y_train)
+dagshub.init(repo_owner='kaebel96', repo_name='exam-dvc', mlflow=True)
+mlflow.xgboost.autolog(log_models=True, registered_model_name='XGBoost')
 
-#--Save the trained model to a file
-model_filename = './models/trained_model.joblib'
-joblib.dump(xgb_regressor, model_filename)
-print("Model trained and saved successfully.")
+with mlflow.start_run():
+    xgb_regressor.fit(X_train, y_train)
+    #--Save the trained model to a file
+    model_filename = './models/trained_model.joblib'
+    joblib.dump(xgb_regressor, model_filename)
+    mlflow.log_artifact(model_filename)
+    # mlflow.xgboost.log_model(xgb_regressor, registered_model_name='XGBoost')
+    print("Model trained and saved successfully!")

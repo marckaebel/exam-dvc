@@ -101,8 +101,8 @@ stages:
       size: 121
     - path: src/models/train_model.py
       hash: md5
-      md5: 37a89c4ad4dda59c393d109368895dd6
-      size: 789
+      md5: c246500b091d19edabe94a16694b4013
+      size: 1089
     outs:
     - path: models/trained_model.joblib
       hash: md5
@@ -125,10 +125,14 @@ stages:
       size: 1191944
     - path: src/models/evaluate_model.py
       hash: md5
-      md5: 11e48a42c74c7f2a9a5f8ecfb7af6ca3
-      size: 1063
+      md5: 94610b84064cdc5e529d4b960d382700
+      size: 1350
     outs:
     - path: data/predictions.csv
       hash: md5
       md5: 5fc825a8860265719e275f72aa741423
       size: 5888
+    - path: metrics/scores.json
+      hash: md5
+      md5: 232efbfcc6b19e614208f7fea2bd555b
+      size: 54
